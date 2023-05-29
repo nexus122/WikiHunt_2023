@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { SearchResult } from './selection.component.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-seleccion',
@@ -8,16 +10,21 @@ import { map } from 'rxjs';
   styleUrls: ['./seleccion.component.css'],
 })
 export class SeleccionComponent {
-  search$: any = {};
-  constructor(private http: HttpClient) {
-    this.search$ = this.getData('Adolf Hitler').pipe(
-      map((data: any) => data.query.search)
-    );
+  search$?: Observable<SearchResult>;
+  parametro!: string;
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    // Cuando se cargue la pagina, que lo haga con un parametro y nos cargue cosas
+    this.route.params.subscribe(params => {
+      this.parametro = params['name'];
+      console.log(this.parametro);
+      this.search$ = this.getData(this.parametro);
+    });        
   }
 
-  getData(searchParam: string) {
-    return this.http.get(
-      `https://es.wikipedia.org/w/api.php?action=query&list=search&srprop=snippet&format=json&origin=*&utf8=&srsearch=${searchParam}`
+  getData(searchParam: string):Observable<SearchResult> {
+    console.log("Entra a pedir con: ", searchParam)
+    return this.http.get<SearchResult>(
+      `https://es.wikipedia.org/w/api.php?action=parse&page=${searchParam}&prop=links&format=json&origin=*`
     );
   }
 }

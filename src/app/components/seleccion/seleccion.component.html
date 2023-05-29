@@ -1,3 +1,7 @@
-<ul *ngFor="let busqueda of search$ | async">
-  <li>{{ busqueda }}</li>
-</ul>
+<ng-container *ngIf="search$ | async as searchResult">
+  <ul>
+    <li *ngFor="let busqueda of searchResult.parse.links">
+      {{ busqueda['*'] }}
+    </li>
+  </ul>
+</ng-container>

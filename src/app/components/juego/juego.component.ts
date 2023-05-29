@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-juego',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./juego.component.css']
 })
 export class JuegoComponent {
+  valorInput!: string;
 
+  constructor(private router: Router){}
+
+  construirRuta(){
+    const ruta = '/juego/'+this.valorInput;
+    this.router.navigateByUrl(ruta);
+  }
 }

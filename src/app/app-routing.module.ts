@@ -4,9 +4,9 @@ import { SeleccionComponent } from './components/seleccion/seleccion.component';
 import { JuegoComponent } from './components/juego/juego.component';
 
 const routes: Routes = [
-  { path: '', component: SeleccionComponent },
-  { path: 'juego', component: JuegoComponent },
-  { path: '*', component: SeleccionComponent },
+  { path: '', component: JuegoComponent },
+  { path: 'juego/:name', component: SeleccionComponent },
+  { path: '*', component: JuegoComponent },
 ];
 
 @NgModule({
