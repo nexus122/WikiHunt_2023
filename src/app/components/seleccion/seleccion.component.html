@@ -1,6 +1,6 @@
 <ng-container *ngIf="search$ | async as searchResult">
   <ul>
-    <li *ngFor="let busqueda of searchResult.parse.links">
+    <li *ngFor="let busqueda of searchResult.parse.links" class="pointer" (click)="getData(busqueda['*'])">
       {{ busqueda['*'] }}
     </li>
   </ul>

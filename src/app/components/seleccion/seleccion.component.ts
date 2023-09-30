@@ -17,13 +17,13 @@ export class SeleccionComponent {
     this.route.params.subscribe(params => {
       this.parametro = params['name'];
       console.log(this.parametro);
-      this.search$ = this.getData(this.parametro);
+      this.getData(this.parametro);
     });        
   }
 
-  getData(searchParam: string):Observable<SearchResult> {
+  getData(searchParam: string) {
     console.log("Entra a pedir con: ", searchParam)
-    return this.http.get<SearchResult>(
+    this.search$ = this.http.get<SearchResult>(
       `https://es.wikipedia.org/w/api.php?action=parse&page=${searchParam}&prop=links&format=json&origin=*`
     );
   }
